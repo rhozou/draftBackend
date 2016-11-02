@@ -7,6 +7,7 @@ app.use(bodyParser.json())
 require('./src/profile')(app)
 require('./src/articles')(app)
 require('./src/auth')(app)
+require('./src/following')(app)
 
 // Get the port from the environment, i.e., Heroku sets it
 const port = process.env.PORT || 3000

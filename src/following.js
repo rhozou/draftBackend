@@ -1,25 +1,23 @@
 "use strict";
 
-const followedUsers = { username: "Rho", following: ["Scott", "Mary", "Jim"]}
+const profileModule = require("./profile")
 
 const getFollowedUsers = (req, res) => {
-    const user = req.params.user ? req.params.user : followedUsers.username
-    res.send({username: user, following: followedUsers.following})
+    const user = req.params.user ? req.params.user : profileModule.profile.username
+    res.send({username: user, following: profileModule.profile.followers})
 }
 
 const addFollower = (req, res) => {
     if (req.params.user){
-        followedUsers.following.push(req.params.user)
-        res.send({username: followedUsers.username, following: followedUsers.following})
+        profileModule.addFollower(req.params.user)
+        res.send({username: profileModule.profile.username, following: profileModule.profile.followers})
     }
 }
 
 const deleteFollower = (req, res) => {
     if (req.params.user){
-        const newFollowers = followedUsers.following.filter(function(user){
-            return user !== req.params.user
-        })
-        followedUsers.following = newFollowers
+        profileModule.deleteFollower(req.params.user)
+        res.send({username: profileModule.profile.username, following: profileModule.profile.followers})
     }
 }
 

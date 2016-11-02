@@ -1,6 +1,9 @@
 "use strict";
 
+const profileModule = require("./profile")
+
 const login = (req, res) => {
+    profileModule.userLogin(req.body.username)
     res.send({username: req.body.username, result: "success"})
 }
 
@@ -9,11 +12,14 @@ const logout = (req, res) => {
 }
 
 const register = (req, res) => {
+    profileModule.userRegister(req.body.username, req.body.email, req.body.dob,
+     req.body.zipcode, req.body.password)
     res.send({username: req.body.username, result: "success"})
 }
 
 const password = (req, res) => {
-    res.send({username: "Rho", status: "will not change"})
+    profileModule.updatePwd(req.body.password)
+    res.send({username: profileModule.profile.username, status: "will not change"})
 }
 
 
