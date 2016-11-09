@@ -1,9 +1,9 @@
 "use strict";
 
 const allArticles = [
-    {id:1, author:'Scott', text:'This is my first article', date: new Date(), avatar: "", comments: []}, 
-    {id:2, author:'Max', text:'This is max article', date: new Date(), avatar: "", comments: []}, 
-    {id:3, author:'Lee', text:'This is lee article', date: new Date(), avatar: "", comments: []}]
+    {id:1, author:'Scott', text:'This is my first article', date: new Date(), img: "", comments: []}, 
+    {id:2, author:'Max', text:'This is max article', date: new Date(), img: "", comments: []}, 
+    {id:3, author:'Lee', text:'This is lee article', date: new Date(), img: "", comments: []}]
 
 const addArticle = (req, res) => {
      const newId = allArticles.length + 1

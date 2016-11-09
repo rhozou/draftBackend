@@ -2,8 +2,25 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
+const modifyHeaders = (req, res, next)=>{
+	var origin=req.headers.origin
+	res.set({'Access-Control-Allow-Credentials': true,
+             'Access-Control-Allow-Headers': 'Authorization, Content-Type, X-Requested-With, Origin',
+             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+             'Access-Control-Allow-Origin': origin})
+    console.log(res)
+	if(req.method==='OPTIONS'){
+		res.status(200).send()	
+	}
+    else{
+		next()
+	}
+}
+
+
 const app = express()
 app.use(bodyParser.json())
+app.use(modifyHeaders)
 require('./src/profile')(app)
 require('./src/articles')(app)
 require('./src/auth')(app)

@@ -1,5 +1,41 @@
 import Promise from 'bluebird'
-import Action, { resource } from '../../actions'
+import Action, { resource, updateError } from '../../actions'
+
+
+
+export function removeFollower(uid) {
+	return (dispatch) => {
+		resource('DELETE', 'following/' + uid).then((response) => {
+			dispatch({type: Action.DELETE_FOLLOWER, username: uid})
+		})
+	}
+}
+
+export function addFollower(uid) {
+	return (dispatch) => {
+		resource('PUT', 'following/' + uid).then((response) => {
+			// check whether the added user exists or not
+			if (response.following.indexOf(uid) === -1){
+				dispatch(updateError(`The user ${uid} that you added does not exist.`))
+			}
+			else{
+				const newFollower = { name: uid }
+				const newFollowerHeadline = resource('GET','headlines'+'/'+uid)
+				.then((headlineResponse) => {
+					newFollower['headline'] = headlineResponse.headlines[0].headline
+				})
+				const newFollowerAvatar = resource('GET','avatars'+'/'+uid)
+				.then((avatarResponse) => {
+					newFollower['avatar'] = avatarResponse.avatars[0].avatar
+				})
+				// wait till headline and avatar response back
+				Promise.all([newFollowerHeadline, newFollowerAvatar]).then(()=>{
+					dispatch({type: Action.ADD_FOLLOWER, newFollower: newFollower})
+				})
+			}
+		})
+	}
+}
 
 export function fetchFollowers() {
     return (dispatch) => {

@@ -17,7 +17,7 @@ const Login = ({dispatch}) => {
                 <input type="password" name="password" placeholder="Password..." className="form-control" id="password" 
                 ref={(node) => { password = node }}required />
             </div>
-            <input className="btn btn-primary" type="button" value="Login!"
+            <input className="btn btn-primary" id="loginBtn" type="button" value="Login!"
              onClick={() => { dispatch(localLogin(username.value, password.value)) }}/>
         </form>
     )

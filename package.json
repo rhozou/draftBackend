@@ -7,7 +7,8 @@
     "start": "node index.js",
     "watch": "nodemon index.js",
     "test": "mocha --opts mocha.opts ./src/*.spec.js",
-    "test:watch": "npm run test -- -w"
+    "test:watch": "npm run test -- -w",
+    "test:xunit": "mocha --opts mocha.opts ./src/*.spec.js -R xunit > ./results.xml"
   },
   "keywords": [],
   "author": "",

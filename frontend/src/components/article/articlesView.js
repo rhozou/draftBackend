@@ -1,40 +1,40 @@
-
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Article from './article'
 import { searchKeyword } from './articleActions'
 
-const ArticlesView = ({username, articles, dispatch}) => {  
-  let keyword = ''
-  return (
+class ArticlesView extends Component {  
+  
+
+  render() {return (
     <div>
         <div className="col-xs-6 col-md-9">
             <div className="input-group">
-                <input type="text" className="form-control" placeholder="Search for..."
-                ref={(node) => keyword = node } />
+                <input type="text" id="searchText" className="form-control" placeholder="Search for..."
+                ref={(node) => this.keyword = node } />
                 <span className="input-group-btn">
-                <button type="button" className="btn btn-primary"
-                onClick={() => { dispatch(searchKeyword(keyword.value)) }}>
+                <button type="button" id="searchBtn" className="btn btn-primary"
+                onClick={() => { this.props.dispatch(searchKeyword(this.keyword.value)) }}>
                 <span className="glyphicon glyphicon-search"></span> Search</button>
                 </span>
                 <br/>
             </div>
         </div>
 
-        { articles.sort((a,b) => {
+        { this.props.articles.sort((a,b) => {
           if (a.date < b.date)
             return 1
           if (a.date > b.date)
             return -1
           return 0
         }).map((article) =>
-          <Article key={article._id} _id={article._id} username={username} author={article.author}
+          <Article key={article._id} _id={article._id} username={this.props.username} author={article.author}
             date={article.date} text={article.text} img={article.img} avatar={article.avatar}
             comments={article.comments}/>
         )}
 
     </div>
-  )
+  )}
 }
 
 ArticlesView.propTypes = {
@@ -60,9 +60,10 @@ export default connect(
         return { ...c, avatar: avatars[c.author] }
       })}
     })
+    
     return {
       username: state.profile.username,
-      articles
+      articles: articles
     }
   }
 )(ArticlesView)

@@ -1,4 +1,4 @@
-import Action, { resource, updateError, navToMain, navToOut } from '../../actions'
+import Action, { resource, updateError, updateSuccess, navToMain, navToOut } from '../../actions'
 import Promise from 'bluebird'
 import { fetchFollowers } from '../main/followingActions'
 import { fetchArticles } from '../article/articleActions'
@@ -64,9 +64,7 @@ export function register(uname, email, dob, zipcode, password) {
         resource('POST', 'register', { username: uname, email: email, dob: dob, zipcode: zipcode, 
             password: password})
         .then((response) => {
-            dispatch({type: Action.REGISTER_USER, username: response.username})
-            dispatch(initialVisit())
-            fetchProfile(username, dispatch)
+            dispatch(updateSuccess(`You successfully registered as ${uname}`))
         }).catch((err) => {
             dispatch(updateError(`There was an error register as ${uname}`))
         })

@@ -1,28 +1,35 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { addFollower, removeFollower } from './followingActions'
+import Follower from './follower'
 
 
-const Follower = ({name, avatar, headline}) => (
+let Message = ({error, success}) => (
+    <div className="card">
+        { error.length == 0 ? '' :
+            <h4 id="message"> {error} </h4>
+        }
 
-    <li>
-        <div className="card">
-            <img src={ avatar } />
-            <div className="cardContainer">
-                <h5><b>{ name }</b></h5> 
-                <p> {headline} <button className="btn unfollowBtn">Unfollow</button> </p>
-            </div>
-        </div>
-    </li>
+        { success.length == 0 ? '' :
+            <h4 id="message"> {success} </h4>
+        }
+    </div>
 )
 
-Follower.propTypes = {
-    name: PropTypes.string.isRequired,
-    avatar: PropTypes.string,
-    headline: PropTypes.string
+Message.propTypes = {
+    error: PropTypes.string.isRequired,
+    success: PropTypes.string.isRequired
 }
 
+Message = connect((state) => {
+    return { error: state.common.error, success: state.common.success }
+})(Message)
+
+
 class Following extends Component {
-    render() { return (
+    render() { 
+        let newUser
+        return (
         <div>
             
             { Object.keys(this.props.followers).sort().map((followerName) => this.props.followers[followerName]).map((follower) =>
@@ -33,8 +40,14 @@ class Following extends Component {
 
             <li>
                 <br />
-                <input type="text" name="newUser" placeholder="New User..." className="form-control" id="newUser" />
-                <button className="btn">Add</button>
+                <input type="text" name="newUser" placeholder="New User..." className="form-control" 
+                id="newUser" ref={(node) => {newUser = node}} />
+                <button className="btn" id="addUserBtn"
+                onClick={() => { this.props.dispatch(addFollower(newUser.value)) }}>Add</button>
+            </li>
+
+            <li>
+                <Message/>
             </li>
                 
         </div>
@@ -42,7 +55,9 @@ class Following extends Component {
 }
 
 Following.propTypes = {
-    followers: PropTypes.object.isRequired
+    followers: PropTypes.arrayOf(PropTypes.shape({
+    ...Follower.propTypes
+  }).isRequired).isRequired
 }
 
 export default connect(

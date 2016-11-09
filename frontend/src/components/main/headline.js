@@ -9,11 +9,15 @@ class Headline extends Component {
             <div className="card">
                 <img src={ this.props.avatar } />
                 <div className="cardContainer">
-                    <h5><b>{ this.props.username }</b></h5> 
+                    <h5>
+                        <span id="loggedinUsername">
+                            <b>{ this.props.username }</b>
+                        </span>
+                    </h5> 
                     <span id="status">{ this.props.headline }</span>
 
                     <input type="text" name="status" id="statusInput" 
-                    placeholder="Status..." className="form-control" id="status" 
+                    placeholder="Status..." className="form-control" 
                     ref={ (node) => { this.newHeadline = node }}
                      />
                     

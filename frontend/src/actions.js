@@ -1,18 +1,24 @@
 import Promise from 'bluebird'
 import fetch from 'isomorphic-fetch'
-export const apiUrl = 'http://localhost:3000'
+export const apiUrl = 'https://webdev-dummy.herokuapp.com'
 
 const Action = {
 
      ADD_ARTICLE: 'ADD_ARTICLE'
+    ,UPDATE_SINGLE_ARTICLE: 'UPDATE_SINGLE_ARTICLE'
     ,UPDATE_ARTICLES: 'UPDATE_ARTICLES'
     ,EDIT_ARTICLE: 'EDIT_ARTICLE'
     ,SEARCH_KEYWORD: 'SEARCH_KEYWORD'
     ,UPDATE_AVATARS: 'UPDATE_AVATARS'
 
     ,UPDATE_FOLLOWERS: 'UPDATE_FOLLOWERS'
+    ,ADD_FOLLOWER: 'ADD_FOLLOWER'
+    ,DELETE_FOLLOWER: 'DELETE_FOLLOWER'
     ,UPDATE_HEADLINE: 'UPDATE_HEADLINE'
+    ,UPDATE_EMAIL: 'UPDATE_EMAIL'
+    ,UPDATE_ZIPCODE: 'UPDATE_ZIPCODE'
     ,UPDATE_PROFILE: 'UPDATE_PROFILE'
+    ,UPDATE_AVATAR: 'UPDATE_AVATAR'
 
     ,ERROR: 'ERROR'
     ,SUCCESS: 'SUCCESS'

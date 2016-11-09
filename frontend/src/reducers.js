@@ -2,21 +2,39 @@ import { combineReducers } from 'redux'
 import Action from './actions'
 
 function followers(state = { followers: {} }, action) {
+    // we need copy of allFollowers so we donot mutate the old state
+    const allFollowers = state.followers
+    const newFollowers = {...allFollowers}
     switch(action.type) {
         case Action.UPDATE_FOLLOWERS:
             return { ...state, followers: action.followers }
-
+        
+        case Action.ADD_FOLLOWER:
+            newFollowers[action.newFollower.name] = action.newFollower
+            return { ...state, followers: newFollowers }
+        case Action.DELETE_FOLLOWER:
+            delete newFollowers[action.username]
+            return { ...state, followers: newFollowers }
         default:
             return state
     }
 }
 
 function articles(state = { articles: {}, searchKeyword: '', avatars: {} }, action) {
+    const allArticles = state.articles
     switch(action.type) {
         case Action.ADD_ARTICLE:
-            const articles = { ...state.articles }
-            articles[action.article.id] = action.article
-            return { ...state, articles }
+            allArticles.push(action.newArticle)
+            return { ...state, articles: allArticles }
+        
+        case Action.UPDATE_SINGLE_ARTICLE:
+            allArticles.forEach(function(article){
+                if (article._id === action.article._id){
+                    article.text = action.article.text
+                    article.comments = action.article.comments
+                }
+            })
+            return { ...state, articles: allArticles }
 
         case Action.UPDATE_ARTICLES:
             return { ...state, articles: action.articles }
@@ -36,6 +54,14 @@ function profile(state = { username:'', headline: '', avatar: '', zipcode: '', e
     switch (action.type) {
         case Action.UPDATE_HEADLINE:
             return { ...state, headline: action.headline }
+        case Action.UPDATE_EMAIL:
+            return { ...state, email: action.email }
+        
+        case Action.UPDATE_ZIPCODE:
+            return { ...state, zipcode: action.zipcode }
+        
+        case Action.UPDATE_AVATAR:
+            return { ...state, avatar: action.avatar }
 
         case Action.LOGIN_LOCAL:
             return { ...state, username: action.username }

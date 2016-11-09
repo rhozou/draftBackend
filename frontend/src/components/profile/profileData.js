@@ -1,18 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import ProfileForm from './ProfileForm'
+import ProfileAvatar from './profileAvatar'
+
 
 const ProfileData = ({username, avatar, email, zipcode, dob}) => (
         <div>
-            <div className="row">
-                <div className="col-md-6">
-                    <img src={avatar} />
-                    <br />
-                    <label className="btn btn-default btn-file">
-                        Upload Image <input type="file" style={{"display" : "none"}} />
-                    </label>
-                </div>
-            </div>
+            
+            <ProfileAvatar avatar={avatar}/>
+
             <div className="row">
                 <div className="col-md-6">
                     <table className="table table-hover">
@@ -38,47 +35,7 @@ const ProfileData = ({username, avatar, email, zipcode, dob}) => (
                     </table>
                 </div>
                 
-                <div className="col-md-6">
-                    <div className="form-box" id="updateForm">
-                        <div className="form-top">
-                            <div className="form-top-left">
-                                <h3>Update Info</h3>
-                            </div>
-                        </div>
-                        <div className="form-bottom">
-                            <form role="form" action="#" method="GET" id="regForm">
-                                <div className="form-group">
-                                    <label className="sr-only">Display Name</label>
-                                    <input type="text" name="displayName" placeholder="Display name..."
-                                           id="displayName" pattern="[A-Za-z]+[A-Za-z0-9]*" className="form-control"
-                                           title="Display name can only be upper or lower case letters and numbers, but may not start with a number" />
-                                </div>
-                                <div className="form-group">
-                                    <label className="sr-only">Email</label>
-                                    <input type="email" name="email" placeholder="Email..." className="form-control" id="email" pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+" 
-                                    title="Email should contain @ and . for correct format." />
-                                </div>
-                                <div className="form-group">
-                                    <label className="sr-only">Phone</label>
-                                    <input type="text" name="phone" placeholder="Phone..." className="form-control" id="phone" pattern="\d{3}-\d{3}-\d{4}"
-                                    title="Phone number should be format of 123-123-1234" />
-                                </div>
-                                <div className="form-group">
-                                    <label className="sr-only">Zipcode</label>
-                                    <input type="text" id="zipcode" name="zipcode"  pattern="\d{5}"
-                                    title="US zipcode should be exactly 5 digits." placeholder="Zipcode..."
-                                    className="form-control" />
-                                </div>
-                                <div className="form-group">
-                                    <label className="sr-only">Password</label>
-                                    <input type="password" id="pwd" placeholder="Password..." name="pwd" className="form-control" />
-                                </div>
-                                <button type="submit" className="btn" id="updateBtn">Update</button>
-                            </form>
-                            
-                        </div>
-                    </div>
-                </div>
+                <ProfileForm/>
             </div>
         </div>
 )

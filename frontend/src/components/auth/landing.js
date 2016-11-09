@@ -8,11 +8,11 @@ let Message = ({error, success}) => (
     <div className="row">
         <div className="card">
             { error.length == 0 ? '' :
-                <h3> {error} </h3>
+                <h3 id="message"> {error} </h3>
             }
 
             { success.length == 0 ? '' :
-                <h3> {success} </h3>
+                <h3 id="message"> {success} </h3>
             }
         </div>
     </div>
