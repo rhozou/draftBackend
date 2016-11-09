@@ -1,0 +1,5 @@
+{ 
+     "netid": "xz9",
+  "frontend": "http://rho-fbapp.surge.sh/",
+  "backend": "https://rho-backend.herokuapp.com"
+}
